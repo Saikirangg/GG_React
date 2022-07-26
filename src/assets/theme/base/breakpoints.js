@@ -1,4 +1,3 @@
-
 /**
  * The base breakpoints for the Gourmet Garden CRM PRO React.
  * You can add new breakpoints using this file.

@@ -1,5 +1,3 @@
-
-
 /**
  * The base box-shadow styles for the Gourmet Garden CRM PRO React.
  * You can add new box-shadow using this file.
