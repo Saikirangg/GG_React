@@ -23,7 +23,7 @@
 // Gourmet Garden CRM React layouts
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
-// import Billing from "layouts/billing";
+import OrderList from "layouts/orders";
 // import RTL from "layouts/rtl";
 // import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
@@ -50,14 +50,14 @@ const routes = [
     route: "/tables",
     component: <Tables />,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Billing",
-  //   key: "billing",
-  //   icon: <Icon fontSize="small">receipt_long</Icon>,
-  //   route: "/billing",
-  //   component: <Billing />,
-  // },
+  {
+    type: "collapse",
+    name: "Orders",
+    key: "billing",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/billing",
+    component: <OrderList />,
+  },
   // {
   //   type: "collapse",
   //   name: "RTL",
