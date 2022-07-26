@@ -1,5 +1,3 @@
-
-
 /**
  * The base typography styles for the Gourmet Garden CRM PRO React.
  * You can add new typography style using this file.

@@ -1,4 +1,3 @@
-
 // Gourmet Garden CRM React Base Styles
 import colors from "assets/theme/base/colors";
 
