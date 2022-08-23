@@ -27,6 +27,8 @@ import Tables from "layouts/tables";
 // import RTL from "layouts/rtl";
 // import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
+import CallStatus from "layouts/call-status";
+import CallTags from "layouts/call-tags";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
@@ -41,6 +43,22 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "CallStatus",
+    key: "callstatus",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/callstatus",
+    component: <CallStatus />,
+  },
+  {
+    type: "collapse",
+    name: "CallTags",
+    key: "calltags",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/calltags",
+    component: <CallTags />,
   },
   {
     type: "collapse",
