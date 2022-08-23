@@ -54,9 +54,9 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "CallTags",
+    name: "Call Tags",
     key: "calltags",
-    icon: <Icon fontSize="small">table_view</Icon>,
+    icon: <Icon fontSize="small">Call</Icon>,
     route: "/calltags",
     component: <CallTags />,
   },

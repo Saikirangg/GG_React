@@ -28,12 +28,12 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import authorsTableData from "layouts/call-tags/data/callTagsTableData";
+// import projectsTableData from "layouts/tables/data/projectsTableData";
 
-function Tables() {
+function CallTags() {
   const { columns, rows } = authorsTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  // const { columns: pColumns, rows: pRows } = projectsTableData();
 
   return (
     <DashboardLayout>
@@ -67,7 +67,7 @@ function Tables() {
               </MDBox>
             </Card>
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Card>
               <MDBox
                 mx={2}
@@ -93,7 +93,7 @@ function Tables() {
                 />
               </MDBox>
             </Card>
-          </Grid>
+          </Grid> */}
         </Grid>
       </MDBox>
       <Footer />
@@ -101,4 +101,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default CallTags;
