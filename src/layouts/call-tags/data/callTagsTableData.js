@@ -25,8 +25,26 @@ import MDBadge from "components/MDBadge";
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
+import React, { useEffect, useState } from "react"
 
 export default function data() {
+  const [users, setUsers] = useState([]);
+  
+  const fetchData = () => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        return response.json();
+      })
+      .then((datas) => {
+        console.log(datas)
+        setUsers(datas);
+      })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
@@ -36,6 +54,15 @@ export default function data() {
         </MDTypography>
         <MDTypography variant="caption">{email}</MDTypography>
       </MDBox>
+      {/* <div> */}
+      {/* {users.length > 0 && (
+        <ul>
+          {users.map(user => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+      )} */}
+    {/* </div> */}
     </MDBox>
   );
 
@@ -49,6 +76,12 @@ export default function data() {
   );
 
   return {
+    // users:[
+    //   users.map(user => (
+    //     <li key={user.id}>{user.name}</li>
+    //   ))
+    // ],
+
     columns: [
       { Header: "author", accessor: "author", width: "45%", align: "left" },
       { Header: "function", accessor: "function", align: "left" },
@@ -68,45 +101,7 @@ export default function data() {
         ),
         employed: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        author: <Author image={team3} name="Alexa Liras" email="alexa@creative-tim.com" />,
-        function: <Job title="Programator" description="Developer" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            11/01/19
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        author: <Author image={team4} name="Laurent Perrier" email="laurent@creative-tim.com" />,
-        function: <Job title="Executive" description="Projects" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            19/09/17
+           {users.phone}
           </MDTypography>
         ),
         action: (
@@ -116,5 +111,6 @@ export default function data() {
         ),
       },
     ],
+
   };
 }

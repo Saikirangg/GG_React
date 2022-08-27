@@ -31,8 +31,12 @@ import DataTable from "examples/Tables/DataTable";
 import authorsTableData from "layouts/call-tags/data/callTagsTableData";
 // import projectsTableData from "layouts/tables/data/projectsTableData";
 
+
+
 function CallTags() {
   const { columns, rows } = authorsTableData();
+
+
   // const { columns: pColumns, rows: pRows } = projectsTableData();
 
   return (
@@ -65,6 +69,7 @@ function CallTags() {
                   noEndBorder
                 />
               </MDBox>
+          
             </Card>
           </Grid>
           {/* <Grid item xs={12}>
@@ -99,6 +104,7 @@ function CallTags() {
       <Footer />
     </DashboardLayout>
   );
+
 }
 
 export default CallTags;
