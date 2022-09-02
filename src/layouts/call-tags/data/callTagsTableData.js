@@ -29,21 +29,56 @@ import React, { useEffect, useState } from "react"
 
 export default function data() {
   const [users, setUsers] = useState([]);
-  
-  const fetchData = () => {
+  const [usersList, setUsersList] = useState([]);
+
+  useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {
         return response.json();
       })
       .then((datas) => {
-        console.log(datas)
+        console.log(datas);
         setUsers(datas);
       })
-  }
+  }, [])
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    console.log(users);
+    if (users.length > 0) {
+      var usersListTemp = [];
+      users.map((u)=>{
+        usersListTemp.push({
+          // (users.map(us => us.name))
+          author: <Author image={team2}
+            // {...users.map(user => ( 
+            // {...console.log(userk.username)}
+            name={u.name}
+            email={u.email}
+          // ))}
+          />,
+          function: <Job title="Manager" description="Organization" />,
+          status: (
+            <MDBox ml={-1}>
+              <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+            </MDBox>
+          ),
+          employed: (
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+              {u.id}
+            </MDTypography>
+          ),
+          action: (
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+              Edit
+            </MDTypography>
+          ),
+        })
+      })
+      setUsersList(usersListTemp)
+    } else {
+      setUsersList([])
+    }
+  }, [users]);
 
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -62,7 +97,7 @@ export default function data() {
           ))}
         </ul>
       )} */}
-    {/* </div> */}
+      {/* </div> */}
     </MDBox>
   );
 
@@ -74,6 +109,10 @@ export default function data() {
       <MDTypography variant="caption">{description}</MDTypography>
     </MDBox>
   );
+
+
+
+
 
   return {
     // users:[
@@ -90,27 +129,10 @@ export default function data() {
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: [
-      {
-        author: <Author image={team2} name="John Michael" email="john@creative-tim.com" />,
-        function: <Job title="Manager" description="Organization" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-           {users.phone}
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-    ],
+    // {users.length>0 ? (rows:[]) : (rows:[])}
+
+    rows: usersList
+    ,
 
   };
 }
