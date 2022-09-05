@@ -72,22 +72,22 @@ var requestOptions = {
       users.map((u)=>{
         usersListTemp.push({
           // (users.map(us => us.name))
-          author: <Author image={team2}
+          calltag: <Author image={team2}
             // {...users.map(user => ( 
             // {...console.log(userk.username)}
-            name={u.call_id}
-            email={u.call_tag}
+            name={u.call_tag}
+            email={u.call_id}
           // ))}
           />,
           function: <Job title="Manager" description="Organization" />,
           status: (
             <MDBox ml={-1}>
-              <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
+              <MDBadge badgeContent={u.is_active.toString()} color="success" variant="gradient" size="sm" />
             </MDBox>
           ),
-          employed: (
+          createdat: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              {u.id}
+              {u.created_at}
             </MDTypography>
           ),
           action: (
@@ -112,15 +112,6 @@ var requestOptions = {
         </MDTypography>
         <MDTypography variant="caption">{email}</MDTypography>
       </MDBox>
-      {/* <div> */}
-      {/* {users.length > 0 && (
-        <ul>
-          {users.map(user => (
-            <li key={user.id}>{user.name}</li>
-          ))}
-        </ul>
-      )} */}
-      {/* </div> */}
     </MDBox>
   );
 
@@ -145,10 +136,10 @@ var requestOptions = {
     // ],
 
     columns: [
-      { Header: "author", accessor: "author", width: "45%", align: "left" },
+      { Header: "calltag", accessor: "calltag", width: "45%", align: "left" },
       { Header: "function", accessor: "function", align: "left" },
       { Header: "status", accessor: "status", align: "center" },
-      { Header: "employed", accessor: "employed", align: "center" },
+      { Header: "createdat", accessor: "createdat", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
