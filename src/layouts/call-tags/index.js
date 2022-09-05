@@ -57,7 +57,7 @@ function CallTags() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Authors Table
+                  Call Tags
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>

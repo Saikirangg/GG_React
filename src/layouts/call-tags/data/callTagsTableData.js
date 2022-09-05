@@ -32,13 +32,36 @@ export default function data() {
   const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
+
+    var raw = "";
+
+var requestOptions = {
+  method: 'GET',
+  body: raw,
+  redirect: 'follow'
+};
+
+// fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/", requestOptions)
+//   .then((response) => {
+//   // response => response.text();
+//   console.log(response)
+//   setUsers(response.data);
+//   return response.json();
+//   }
+//   )
+//   .then(result => console.log(result.data))
+//   .catch(error => console.log('error', error));
+
+
+
+
+    fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/")
       .then((response) => {
         return response.json();
       })
       .then((datas) => {
         console.log(datas);
-        setUsers(datas);
+        setUsers(datas.data);
       })
   }, [])
 
@@ -52,8 +75,8 @@ export default function data() {
           author: <Author image={team2}
             // {...users.map(user => ( 
             // {...console.log(userk.username)}
-            name={u.name}
-            email={u.email}
+            name={u.call_id}
+            email={u.call_tag}
           // ))}
           />,
           function: <Job title="Manager" description="Organization" />,
