@@ -31,6 +31,7 @@ import CallStatus from "layouts/call-status";
 import CallTags from "layouts/call-tags";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Orders from "layouts/orders";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -43,6 +44,14 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Orders",
+    key: "orders",
+    icon: <Icon fontSize="small">discount</Icon>,
+    route: "/orders",
+    component: <Orders />,
   },
   {
     type: "collapse",
