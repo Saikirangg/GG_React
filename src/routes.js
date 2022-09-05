@@ -32,6 +32,7 @@ import CallTags from "layouts/call-tags";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Orders from "layouts/orders";
+import Products from "layouts/products";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -52,6 +53,14 @@ const routes = [
     icon: <Icon fontSize="small">discount</Icon>,
     route: "/orders",
     component: <Orders />,
+  },
+  {
+    type: "collapse",
+    name: "Products",
+    key: "products",
+    icon: <Icon fontSize="small">addhome</Icon>,
+    route: "/products",
+    component: <Products />,
   },
   {
     type: "collapse",

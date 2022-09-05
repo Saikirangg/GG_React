@@ -46,8 +46,8 @@ myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
 myHeaders.append("Content-Type", "application/json");
 
 var graphql = JSON.stringify({
-  query: "query Order($first: Int){\n    orders(first: $first) {\n		edges {\n			node {\n				__typename\n				created\n				id\n				number\n				payments {\n					gateway\n					__typename\n				}\n				privateMetadata {\n					key\n					value\n					__typename\n				}\n				voucher {\n					code\n					__typename\n				}\n				metadata {\n					key\n					value\n					__typename\n				}\n				fulfillments {\n					trackingNumber\n					__typename\n				}\n				paymentStatus\n				status\n				total {\n					__typename\n					gross {\n						__typename\n						amount\n						currency\n					}\n				}\n				userEmail\n			}\n			__typename\n		}\n		pageInfo {\n			hasPreviousPage\n			hasNextPage\n			startCursor\n			endCursor\n			__typename\n		}\n		__typename\n	}\n}",
-  variables: {"first":20}
+  query: "fragment Money on Money {\n  amount\n  currency\n  __typename\n}\n\nfragment ProductFragment on Product {\n  id\n  name\n  thumbnail {\n    url\n    __typename\n  }\n  isAvailable\n  isPublished\n  productType {\n    id\n    name\n    hasVariants\n    __typename\n  }\n  __typename\n}\n\nquery Products($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $sort: ProductOrder) {\n  products(before: $before, after: $after, first: $first, last: $last, filter: $filter, sortBy: $sort) {\n    edges {\n      node {\n        ...ProductFragment\n        attributes {\n          attribute {\n            id\n            __typename\n          }\n          values {\n            id\n            name\n            __typename\n          }\n          __typename\n        }\n        pricing {\n          priceRangeUndiscounted {\n            start {\n              gross {\n                ...Money\n                __typename\n              }\n              __typename\n            }\n            stop {\n              gross {\n                ...Money\n                __typename\n              }\n              __typename\n            }\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    pageInfo {\n      hasPreviousPage\n      hasNextPage\n      startCursor\n      endCursor\n      __typename\n    }\n    totalCount\n    __typename\n  }\n}\n",
+  variables: {"first":20,"filter":{"attributes":null,"categories":null,"collections":null,"isPublished":null,"price":null,"productTypes":null,"stockAvailability":null},"sort":{"direction":"ASC","field":"NAME"}}
 })
 var requestOptions = {
   method: 'POST',
@@ -80,8 +80,8 @@ var requestOptions = {
         return response.json();
       })
       .then((datas) => {
-        // console.log(datas);
-        setUsers(datas.data.orders.edges);
+        console.log(datas);
+        setUsers(datas.data.products.edges);
       })
   }, [])
 
@@ -92,22 +92,22 @@ var requestOptions = {
       users.map((u)=>{
         usersListTemp.push({
           // (users.map(us => us.name))
-          id_and_email: <Author image={team2}
+          product_name_and_id: <Author image={u.node.thumbnail!=null?u.node.thumbnail.url:""}
             // {...users.map(user => ( 
             // {...console.log(userk.username)}
-            name={u.node.id}
-            email={u.node.userEmail}
+            name={u.node.name}
+            email={u.node.id}
           // ))}
           />,
-          number_and_status: <Job title={u.node.number} description={u.node.status} />,
-          paymentStatus: (
+          price: <Job title={u.node.pricing.priceRangeUndiscounted.start.gross.amount.toString()+"-"+ u.node.pricing.priceRangeUndiscounted.stop.gross.amount.toString()} description={u.node.pricing.priceRangeUndiscounted.start.gross.currency} />,
+          isAvailable: (
             <MDBox ml={-1}>
-              <MDBadge badgeContent={u.node.paymentStatus} color="success" variant="gradient" size="sm" />
+              <MDBadge badgeContent={u.node.isAvailable.toString()}  color="success" variant="gradient" size="sm" />
             </MDBox>
           ),
-          createdat: (
+          productType: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              "{u.node.created}"
+              {u.node.productType.name}
             </MDTypography>
           ),
           action: (
@@ -156,10 +156,10 @@ var requestOptions = {
     // ],
 
     columns: [
-      { Header: "id_and_email", accessor: "id_and_email", width: "45%", align: "left" },
-      { Header: "number_and_status", accessor: "number_and_status", align: "left" },
-      { Header: "paymentStatus", accessor: "paymentStatus", align: "center" },
-      { Header: "createdat", accessor: "createdat", align: "center" },
+      { Header: "product_name_and_id", accessor: "product_name_and_id", width: "45%", align: "left" },
+      { Header: "price", accessor: "price", align: "left" },
+      { Header: "isAvailable", accessor: "isAvailable", align: "center" },
+      { Header: "productType", accessor: "productType", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
 
