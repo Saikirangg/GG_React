@@ -57,7 +57,7 @@ function Products() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Orders
+                  Products
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
