@@ -33,6 +33,9 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Orders from "layouts/orders";
 import Products from "layouts/products";
+import Dnd from "layouts/dnd";
+import Tickets from "layouts/tickets";
+import PincodeSettings from "layouts/pincodes";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -85,6 +88,30 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
     component: <Tables />,
+  },
+  {
+    type: "collapse",
+    name: "DND Numbers",
+    key: "dnd",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/dnd",
+    component: <Dnd />,
+  },
+  {
+    type: "collapse",
+    name: "PincodeDelivery",
+    key: "pincode",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/pincode",
+    component: <PincodeSettings />,
+  },
+  {
+    type: "collapse",
+    name: "Tickets",
+    key: "tickets",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/tickets",
+    component: <Tickets />,
   },
   // {
   //   type: "collapse",
