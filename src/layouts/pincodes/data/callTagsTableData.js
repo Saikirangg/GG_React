@@ -88,7 +88,7 @@ var requestOptions = {
           // (users.map(us => us.name))
           pincode:
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          <B>{u.pincode}</B>
+ {u.pincode}
         </MDTypography>,
         //  <Author image={team2}
         //     // {...users.map(user => ( 
@@ -105,27 +105,27 @@ var requestOptions = {
           // ),
           monday: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              "{u.monday}"
+              {u.monday? "Active":"Deactive"}
             </MDTypography>
           ),
           tuesday: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              "{u.tuesday}"
+              {u.tuesday ? "Active":"Deactive"}
             </MDTypography>
           ),
           wednesday: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              "{u.wednesday}"
+              {u.wednesday ? "Active":"Deactive"}
             </MDTypography>
           ),
           thursday: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              "{u.thursday}"
+              {u.thursday ? "Active":"Deactive"}
             </MDTypography>
           ),
           friday: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              "{u.friday}"
+              {u.friday? "Active":"Deactive"}
             </MDTypography>
           ),
           saturday: (
@@ -135,7 +135,7 @@ var requestOptions = {
           ),
           sunday: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              "{u.sunday}"
+              {u.sunday? "Active":"Deactive"}
             </MDTypography>
           ),
           // action: (
