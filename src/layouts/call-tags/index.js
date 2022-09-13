@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
+import * as React from 'react';
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -26,15 +26,33 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
+// import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 // Data
 import authorsTableData from "layouts/call-tags/data/callTagsTableData";
+import { Button } from "@mui/material";
 // import projectsTableData from "layouts/tables/data/projectsTableData";
 
 
 
 function CallTags() {
   const { columns, rows } = authorsTableData();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
 
   // const { columns: pColumns, rows: pRows } = projectsTableData();
@@ -61,6 +79,54 @@ function CallTags() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
+              <div>
+              <div>
+      <Button variant="contained" onClick={handleClickOpen}>
+        Add New
+      </Button>
+      <Dialog open={open} PaperProps={{
+        sx: {
+          width: "50%",
+          maxHeight: 1000,
+          height : "45%"
+        }
+      }} onClose={handleClose}>
+        {/* <DialogTitle>Call Tags</DialogTitle> */}
+        <MDBox
+                mx={2}
+                mt={2}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Call Tags
+                </MDTypography>
+              </MDBox>
+        <DialogContent style={{ overflow: "hidden" }}>
+          <DialogContentText>
+            Please add New Call Tags
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Call Tag Name"
+            type="text"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Save</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+              </div>
                 <DataTable
                   table={{ columns, rows }}
                   isSorted={false}
@@ -68,6 +134,7 @@ function CallTags() {
                   showTotalEntries={false}
                   noEndBorder
                 />
+                
               </MDBox>
           
             </Card>
