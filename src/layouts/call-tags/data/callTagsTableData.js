@@ -17,6 +17,7 @@ Coded by www.creative-tim.com
 
 // Gourmet Garden CRM React components
 import MDBox from "components/MDBox";
+import { Button } from "@mui/material";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
@@ -92,7 +93,26 @@ var requestOptions = {
           ),
           action: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              Edit
+              <Button variant="contained"  style={{
+        borderRadius: 24,
+        backgroundColor: "#21b6ae",
+        padding: "2px 39px",
+        fontSize: "13px",
+        color : "white"
+    }}>
+                  Edit
+              </Button>
+              <Button 
+              style={{
+                borderRadius: 24,
+                backgroundColor: "#ed3326",
+                padding: "2px 39px",
+                fontSize: "13px",
+                color : "white"
+            }}
+              variant="contained" >
+                  Delete
+              </Button>
             </MDTypography>
           ),
         })

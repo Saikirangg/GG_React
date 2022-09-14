@@ -12,7 +12,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
+import * as React from 'react';
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -26,15 +26,62 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
+// import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 // Data
 import authorsTableData from "layouts/call-tags/data/callTagsTableData";
+import { Button } from "@mui/material";
 // import projectsTableData from "layouts/tables/data/projectsTableData";
 
 
 
 function CallTags() {
+  const initialValue= ''
+  const placeholder= 'Enter your text...'
   const { columns, rows } = authorsTableData();
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(initialValue)
+
+  
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSaveClose = () => {
+    setOpen(false);
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  "call_tag": value
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+    console.log("value is "+value);
+    window.location.reload()
+  };
 
 
   // const { columns: pColumns, rows: pRows } = projectsTableData();
@@ -61,22 +108,24 @@ function CallTags() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-          
-            </Card>
-          </Grid>
-          {/* <Grid item xs={12}>
-            <Card>
-              <MDBox
+              <div>
+              <div>
+      <Button variant="contained" 
+      style={{ color : "white" }}
+      onClick={handleClickOpen}>
+        Add New
+      </Button>
+      <Dialog open={open} PaperProps={{
+        sx: {
+          width: "50%",
+          maxHeight: 1000,
+          height : "45%"
+        }
+      }} onClose={handleClose}>
+        {/* <DialogTitle>Call Tags</DialogTitle> */}
+        <MDBox
                 mx={2}
-                mt={-3}
+                mt={2}
                 py={3}
                 px={2}
                 variant="gradient"
@@ -85,20 +134,47 @@ function CallTags() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Projects Table
+                  Call Tags
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
+        <DialogContent style={{ overflow: "hidden" }}>
+          <DialogContentText>
+            Please add New Call Tags
+          </DialogContentText>
+          <TextField
+            autoFocus
+            // value={this.state.value}
+            
+            margin="dense"
+            id="name"
+            label="Call Tag Name"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSaveClose}>Save</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+              </div>
                 <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
+                  table={{ columns, rows }}
                   isSorted={false}
                   entriesPerPage={false}
                   showTotalEntries={false}
                   noEndBorder
                 />
+                
               </MDBox>
+          
             </Card>
-          </Grid> */}
+          </Grid>
+          
         </Grid>
       </MDBox>
       <Footer />
