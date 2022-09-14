@@ -110,7 +110,9 @@ fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call
               <MDBox pt={3}>
               <div>
               <div>
-      <Button variant="contained" onClick={handleClickOpen}>
+      <Button variant="contained" 
+      style={{ color : "white" }}
+      onClick={handleClickOpen}>
         Add New
       </Button>
       <Dialog open={open} PaperProps={{
