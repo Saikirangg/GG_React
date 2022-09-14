@@ -43,8 +43,13 @@ import { Button } from "@mui/material";
 
 
 function CallTags() {
+  const initialValue= ''
+  const placeholder= 'Enter your text...'
   const { columns, rows } = authorsTableData();
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(initialValue)
+
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -52,6 +57,30 @@ function CallTags() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSaveClose = () => {
+    setOpen(false);
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  "call_tag": value
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+    console.log("value is "+value);
+    window.location.reload()
   };
 
 
@@ -112,17 +141,21 @@ function CallTags() {
           </DialogContentText>
           <TextField
             autoFocus
+            // value={this.state.value}
+            
             margin="dense"
             id="name"
             label="Call Tag Name"
             type="text"
             fullWidth
             variant="standard"
+            value={value}
+            onChange={e => setValue(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
+          <Button onClick={handleSaveClose}>Save</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -139,33 +172,7 @@ function CallTags() {
           
             </Card>
           </Grid>
-          {/* <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Projects Table
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid> */}
+          
         </Grid>
       </MDBox>
       <Footer />
