@@ -27,10 +27,46 @@ import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 import React, { useEffect, useState } from "react"
+// import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { WindowSharp } from "@mui/icons-material";
+
 
 export default function data() {
   const [users, setUsers] = useState([]);
   const [usersList, setUsersList] = useState([]);
+
+  const [opens, setOpens] = React.useState(false);
+  
+
+  const handleClick = (event, param) => {
+    console.log(param);
+    var raw = "";
+
+var requestOptions = {
+  method: 'DELETE',
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/"+param, requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+    // setOpens(true);
+    // window.location.reload()
+    console.log(param+" id deleted");
+    window.location.reload();
+  };
+
+  const handleCloses = () => {
+    setOpens(false);
+  };
 
   useEffect(() => {
 
@@ -98,11 +134,12 @@ var requestOptions = {
         backgroundColor: "#21b6ae",
         padding: "2px 39px",
         fontSize: "13px",
-        color : "white"
+        color : "white",
+        
     }}>
                   Edit
               </Button>
-              <Button 
+              {/* <Button 
               style={{
                 borderRadius: 24,
                 backgroundColor: "#ed3326",
@@ -112,7 +149,38 @@ var requestOptions = {
             }}
               variant="contained" >
                   Delete
-              </Button>
+              </Button> */}
+              <Button variant="contained"  style={{
+        borderRadius: 24,
+        backgroundColor: "#21b6ae",
+        padding: "2px 39px",
+        fontSize: "13px",
+        color : "white"
+    }} onClick={event => handleClick(event, u.call_id)}>
+        Delete
+      </Button>
+      <Dialog open={opens} onClose={handleCloses}>
+        <DialogTitle>Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            To subscribe to this website, please enter your email address here. We
+            will send updates occasionally.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloses}>Cancel</Button>
+          <Button onClick={handleCloses}>Subscribe</Button>
+        </DialogActions>
+      </Dialog>
             </MDTypography>
           ),
         })
