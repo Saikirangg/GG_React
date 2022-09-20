@@ -34,7 +34,7 @@ export default function data() {
   const [id, setId] = useState([]);
 
 
-  const handleDelete = (id) => {
+  const handleDelete = (event,id) => {
     // setOpen(false);
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -144,9 +144,8 @@ fetch("http://localhost:8000/order/pincodes")
             <div>
               <Button >
                 Edit
-
               </Button>
-              <Button onClick={handleDelete(u.id)} color="error">
+              <Button onClick={event=>handleDelete(event,u.id)} color="error">
                 Delete
               </Button>
             </div>

@@ -53,19 +53,43 @@ function PincodeSettings() {
   const [value, setValue] = React.useState(initialValue);
   const [city, setCity] = React.useState(initialValue);
   // const [preferences, setPreferences] = React.useState( { 'Sunday': false, 'Monday': false, 'Tuesday': false,'Wednesday':false,'Thursday':false,'Friday':false,'Saturday':false } ) 
+  const [sun, setSun] = React.useState(true);
+  const [mon, setMon] = React.useState(false);
+  const [tue, setTue] = React.useState(false);
+  const [thu, setThu] = React.useState(false);
+  const [fri, setFri] = React.useState(false);
+  const [sat, setSat] = React.useState(true);
+  const [wed, setWed] = React.useState(false);
 
   
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
-
-
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleChangeMon = () => {
+    setMon(!mon);
+  };
+  const handleChangeTue = () => {
+    setTue(!tue);
+  };
+  const handleChangeWed = () => {
+    setWed(!wed);
+  };
+  const handleChangeThu = () => {
+    setThu(!thu);
+  };
+  const handleChangefri = () => {
+    setFri(!fri);
+  };
+  const handleChangeSat = () => {
+    setSat(!sat);
+  };
+  const handleChangeSun = () => {
+    setSun(!sun);
+  };
 
 function togglePreference(animal) { 
     
@@ -80,13 +104,13 @@ myHeaders.append("Content-Type", "application/json");
 var raw = JSON.stringify({
   "pincode":value,
   "status":1,
-  "monday":"False", 
-  "tuesday":"False",
-  "wednesday":"False",
-  "thursday":"False",
-  "friday":"False",
-  "saturday":"False",
-  "sunday":"False"
+  "monday":mon, 
+  "tuesday":tue,
+  "wednesday":wed,
+  "thursday":thu,
+  "friday":fri,
+  "saturday":sat,
+  "sunday":sun
 });
 
 var requestOptions = {
@@ -182,13 +206,13 @@ fetch("http://localhost:8000/order/pincodes", requestOptions)
       <FormGroup>
       <FormControlLabel control={<Checkbox defaultChecked />} label="Status" />
       <FormGroup aria-label="position" row>
-      <FormControlLabel control={<Checkbox defaultChecked />} label="Sunday" />
-      <FormControlLabel  control={<Checkbox  defaultChecked />} label="Monday" />
-      <FormControlLabel  control={<Checkbox  />} label="Tuesday" />
-      <FormControlLabel  control={<Checkbox />} label="WednesDay" />
-      <FormControlLabel  control={<Checkbox />} label="Thursday" />
-      <FormControlLabel  control={<Checkbox />} label="Friday" />
-      <FormControlLabel  control={<Checkbox />} label="Saturday" />
+      <FormControlLabel control={<Checkbox checked={sun}  />} label="Sunday" />
+      <FormControlLabel  control={<Checkbox checked={mon}  />} label="Monday" />
+      <FormControlLabel  control={<Checkbox checked={tue}/>} label="Tuesday" />
+      <FormControlLabel  control={<Checkbox checked={wed} />} label="WednesDay" />
+      <FormControlLabel  control={<Checkbox checked={thu} />} label="Thursday" />
+      <FormControlLabel  control={<Checkbox checked={fri} />} label="Friday" />
+      <FormControlLabel  control={<Checkbox checked={sat} />} label="Saturday" />
       </FormGroup>
       </FormGroup>
         </DialogContent>
