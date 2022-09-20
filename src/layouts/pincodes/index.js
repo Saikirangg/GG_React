@@ -16,7 +16,10 @@ Coded by www.creative-tim.com
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
+import * as React from 'react';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 // Gourmet Garden CRM React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -29,14 +32,77 @@ import DataTable from "examples/Tables/DataTable";
 
 // Data
 import authorsTableData from "layouts/pincodes/data/callTagsTableData";
+import { Button } from "@mui/material";
+
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 // import projectsTableData from "layouts/tables/data/projectsTableData";
 
 
 
 function PincodeSettings() {
   const { columns, rows } = authorsTableData();
+  const initialValue= ''
+  const placeholder= 'Enter your text...';
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(initialValue);
+  const [city, setCity] = React.useState(initialValue);
+  // const [preferences, setPreferences] = React.useState( { 'Sunday': false, 'Monday': false, 'Tuesday': false,'Wednesday':false,'Thursday':false,'Friday':false,'Saturday':false } ) 
+
+  
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
 
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+function togglePreference(animal) { 
+    
+    preferences[animal] = !preferences[animal];
+    // Update animal likings 
+  }
+
+const handleSaveClose = () => {
+  // setOpen(false);
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+var raw = JSON.stringify({
+  "pincode":value,
+  "status":1,
+  "monday":"False", 
+  "tuesday":"False",
+  "wednesday":"False",
+  "thursday":"False",
+  "friday":"False",
+  "saturday":"False",
+  "sunday":"False"
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8000/order/pincodes", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+    console.log("value is "+value);
+    window.location.reload()
+  };
   // const { columns: pColumns, rows: pRows } = projectsTableData();
 
   return (
@@ -60,6 +126,78 @@ function PincodeSettings() {
                   Pincodes
                 </MDTypography>
               </MDBox>
+              <div>
+                <Button onClick={handleClickOpen}>
+                  + Add New Pincode
+                </Button>
+                <Dialog open={open} 
+                PaperProps={{
+        sx: {
+          width: "50%",
+          maxHeight: 1000,
+          height : "55%"
+        }
+      }} onClose={handleClose}>
+        {/* <DialogTitle>Call Tags</DialogTitle> */}
+        <MDBox
+                mx={2}
+                mt={2}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                  Call Tags
+                </MDTypography>
+              </MDBox>
+        <DialogContent style={{ overflow: "hidden" }}>
+          <DialogContentText>
+            Please add New Call Tags
+          </DialogContentText>
+          <TextField
+            autoFocus            
+            margin="dense"
+            id="name"
+            label="Pincode "
+            type="text"
+            fullWidth
+            variant="standard"
+            value={value}
+            onChange={e => setValue(e.target.value)}/>
+          {/* <TextField
+            autoFocus
+            // value={this.state.value}
+            margin="dense"
+            id="name"
+            label="City Name "
+            type="text"
+            fullWidth
+            variant="standard"
+            value={city}
+            onChange={e => setCity(e.target.value)}
+          /> */}
+      <FormGroup>
+      <FormControlLabel control={<Checkbox defaultChecked />} label="Status" />
+      <FormGroup aria-label="position" row>
+      <FormControlLabel control={<Checkbox defaultChecked />} label="Sunday" />
+      <FormControlLabel  control={<Checkbox  defaultChecked />} label="Monday" />
+      <FormControlLabel  control={<Checkbox  />} label="Tuesday" />
+      <FormControlLabel  control={<Checkbox />} label="WednesDay" />
+      <FormControlLabel  control={<Checkbox />} label="Thursday" />
+      <FormControlLabel  control={<Checkbox />} label="Friday" />
+      <FormControlLabel  control={<Checkbox />} label="Saturday" />
+      </FormGroup>
+      </FormGroup>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} >Cancel</Button>
+          <Button onClick={handleSaveClose}>Save</Button>
+        </DialogActions>
+                </Dialog>
+              </div>
               <MDBox pt={3}>
                 <DataTable
                   table={{ columns, rows }}
@@ -82,8 +220,7 @@ function PincodeSettings() {
                 variant="gradient"
                 bgColor="info"
                 borderRadius="lg"
-                coloredShadow="info"
-              >
+                coloredShadow="info">
                 <MDTypography variant="h6" color="white">
                   Projects Table
                 </MDTypography>

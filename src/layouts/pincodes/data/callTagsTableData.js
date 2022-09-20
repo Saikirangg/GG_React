@@ -26,10 +26,32 @@ import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 import React, { useEffect, useState } from "react"
+import { Button } from "@mui/material";
 
 export default function data() {
   const [users, setUsers] = useState([]);
   const [usersList, setUsersList] = useState([]);
+  const [id, setId] = useState([]);
+
+
+  const handleDelete = (id) => {
+    // setOpen(false);
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  
+  var requestOptions = {
+    method: 'DELETE',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch("http://localhost:8000/order/pincodes/"+id, requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+      // console.log("value is "+value);
+      window.location.reload()
+    };
 
   useEffect(() => {
 
@@ -49,27 +71,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-
-// fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
-
-// fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/", requestOptions)
-//   .then((response) => {
-//   // response => response.text();
-//   console.log(response)
-//   setUsers(response.data);
-//   return response.json();
-//   }
-//   )
-//   .then(result => console.log(result.data))
-//   .catch(error => console.log('error', error));
-
-
-
-
-    fetch("http://localhost:8000/order/pincodes")
+fetch("http://localhost:8000/order/pincodes")
       .then((response) => {
         return response.json();
       })
@@ -138,11 +140,18 @@ var requestOptions = {
               {u.sunday? "Active":"Deactive"}
             </MDTypography>
           ),
-          // action: (
-          //   <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          //     Edit
-          //   </MDTypography>
-          // ),
+          action: (
+            <div>
+              <Button >
+                Edit
+
+              </Button>
+              <Button onClick={handleDelete(u.id)} color="error">
+                Delete
+              </Button>
+            </div>
+        
+          ),
         })
       })
       setUsersList(usersListTemp)
@@ -150,6 +159,9 @@ var requestOptions = {
       setUsersList([])
     }
   }, [users]);
+
+
+
 
 
   const Author = ({ image, name, email }) => (
