@@ -36,7 +36,7 @@ import Products from "layouts/products";
 import Dnd from "layouts/dnd";
 import Tickets from "layouts/tickets";
 import PincodeSettings from "layouts/pincodes";
-
+import Customers from "layouts/customers";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -49,6 +49,14 @@ const routes = [
     route: "/dashboard",
     component: <Dashboard />,
   },
+    {
+      type: "collapse",
+      name: "Customers",
+      key: "customers",
+      icon: <Icon fontSize="small">paid</Icon>,
+      route: "/customers",
+      component: <Customers />,
+    },
   {
     type: "collapse",
     name: "Orders",
