@@ -97,6 +97,10 @@ var requestOptions = {
             // {...console.log(userk.username)}
             name={u.node.id}
             email={u.node.userEmail}
+            number_val={u.node.number }
+            payments = {u.node.userEmail}
+            gross_value = {u.node.useEffect}
+           
           // ))}
           />,
           number_and_status: <Job title={u.node.number} description={u.node.status} />,
@@ -123,7 +127,7 @@ var requestOptions = {
     }
   }, [users]);
 
-  const Author = ({ image, name, email }) => (
+  const Author = ({ image, name, email, number, payments, gross_value }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
@@ -131,6 +135,9 @@ var requestOptions = {
           {name}
         </MDTypography>
         <MDTypography variant="caption">{email}</MDTypography>
+        <MDTypography variant="caption">{number_val}</MDTypography>
+        <MDTypography variant="caption">{payments}</MDTypography>
+        <MDTypography variant="caption">{gross_value}</MDTypography>
       </MDBox>
     </MDBox>
   );
