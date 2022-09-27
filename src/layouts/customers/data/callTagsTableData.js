@@ -62,25 +62,31 @@ var requestOptions = {
     window.location.reload();
   };
 
-  const walletBalance = (event, param) => {
-    console.log(param);
-    var raw = "";
+  function walletBalance(param) {
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
+myHeaders.append("Content-Type", "application/json");
 
+var graphql = JSON.stringify({
+  query: "query Wallet($userId:ID!){\n  wallet(userId:$userId){\n    id\n    user{\n      id\n      email\n      firstName\n    }\n    amount\n    expiryDate\n  }\n}",
+  variables: {"userId":param}
+})
 var requestOptions = {
-  method: 'DELETE',
-  body: raw,
+  method: 'POST',
+  headers: myHeaders,
+  body: graphql,
   redirect: 'follow'
 };
 
-// fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/"+param, requestOptions)
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
-//     // setOpens(true);
-//     // window.location.reload()
-//     console.log(param+" id deleted");
-
-    window.location.reload();
+fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log("balance is "+result.data.wallet.id))
+  .then((response) => {
+    // return response.data..json();
+  })
+  .catch(error => console.log('error', error));
+  // console.log()
+  // return response.json();
   };
 
   const handleCloses = () => {
@@ -159,7 +165,7 @@ var requestOptions = {
           mobile_number: <Job title="phone" description={u.node.phone!=null?u.node.phone:""} />,
           status: (
             <MDBox ml={-1}>
-              <MDBadge badgeContent={u.node.firstName.toString()} color="success" variant="gradient" size="sm" />
+              <MDBadge badgeContent={walletBalance(u.node.id)} color="success" variant="gradient" size="sm" />
             </MDBox>
           ),
           createdat: (
