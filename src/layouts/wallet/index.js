@@ -234,7 +234,7 @@ function Wallet() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSaveClose}>Save</Button>
+          <Button onClick={handleSaveClose}>Search</Button>
         </DialogActions>
       </Dialog>
     </div>
@@ -259,7 +259,7 @@ function Wallet() {
                     
                   </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        {/* <Button size="small">Learn More</Button> */}
       </CardActions>
     </Card>
                 
