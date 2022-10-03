@@ -57,8 +57,10 @@ function Wallet() {
   const { columns, rows } = authorsTableData();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(initialValue)
-  const [userwallet, setUserwallet] = useState([]);
+  const [userwallet, setUserwallet] = useState("");
   const [userid, setUserid] = useState("");
+  const [useremail, setUseremail] = useState("");
+  const [userfirstname, setUserfirstname] = useState("");
   
 
   const handleClickOpen = () => {
@@ -158,6 +160,34 @@ function Wallet() {
 //     console.log("value is "+value);
     // window.location.reload()
     console.log("finallay here is "+userid)
+
+    //new one
+//     var myHeaders = new Headers();
+// myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
+// myHeaders.append("Content-Type", "application/json");
+
+var graphqlWallet = JSON.stringify({
+  query: "query Wallet($userId:ID!){\n  wallet(userId:$userId){\n    id\n    user{\n      id\n      email\n      firstName\n    }\n    amount\n    expiryDate\n  }\n}",
+  variables: {"userId": userid}
+})
+var requestOptionsWallet = {
+  method: 'POST',
+  headers: myHeaders,
+  body: graphqlWallet,
+  redirect: 'follow'
+};
+
+fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptionsWallet)
+  .then(response => response.text())
+  .then(result => {
+    // console.log(JSON.parse(result).data.wallet.amount)
+    setUserwallet(JSON.parse(result).data.wallet.amount)
+    setUseremail(JSON.parse(result).data.wallet.user.email)
+    setUserfirstname(JSON.parse(result).data.wallet.user.firstName)
+  }
+    )
+  
+  .catch(error => console.log('error', error));
   };
 
 
@@ -250,10 +280,14 @@ function Wallet() {
                 <Card sx={{ minWidth: 275 }}>
                   <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                      Customer Name : 
+                      Customer Name : {userid}
                     </Typography>
                     <Typography variant="h5" component="div">
-                    Balance  : {userid}
+                    Balance  : {userwallet}
+
+                    </Typography>
+                    <Typography variant="h5" component="div">
+                    Email  : {useremail}
 
                     </Typography>
                     
