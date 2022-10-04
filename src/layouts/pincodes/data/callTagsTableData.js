@@ -145,7 +145,7 @@ fetch("http://localhost:8000/order/pincodes")
               <Button >
                 Edit
               </Button>
-              <Button onClick={event=>handleDelete(event,u.id)} color="error">
+              <Button text='red' onClick={event=>handleDelete(event,u.id)}>
                 Delete
               </Button>
             </div>

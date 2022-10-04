@@ -40,9 +40,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
+import { Box } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 // import projectsTableData from "layouts/tables/data/projectsTableData";
-
 
 
 function PincodeSettings() {
@@ -60,8 +60,8 @@ function PincodeSettings() {
   const [fri, setFri] = React.useState(false);
   const [sat, setSat] = React.useState(true);
   const [wed, setWed] = React.useState(false);
+  const [flag, setFlag] = React.useState(false);
 
-  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,25 +69,29 @@ function PincodeSettings() {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleChangeMon = () => {
+
+  const handleFlag = () => {
+    setFlag(false);
+  };
+  const handleChangeMon = (event) => {
     setMon(!mon);
   };
-  const handleChangeTue = () => {
+  const handleChangeTue = (event) => {
     setTue(!tue);
   };
-  const handleChangeWed = () => {
+  const handleChangeWed = (event) => {
     setWed(!wed);
   };
-  const handleChangeThu = () => {
+  const handleChangeThu = (event) => {
     setThu(!thu);
   };
-  const handleChangefri = () => {
+  const handleChangefri = (event) => {
     setFri(!fri);
   };
-  const handleChangeSat = () => {
+  const handleChangeSat = (event) => {
     setSat(!sat);
   };
-  const handleChangeSun = () => {
+  const handleChangeSun = (event) => {
     setSun(!sun);
   };
 
@@ -125,7 +129,9 @@ fetch("http://localhost:8000/order/pincodes", requestOptions)
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
     console.log("value is "+value);
-    window.location.reload()
+    setFlag(false);
+    handleFlag();
+    // window.location.reload()
   };
   // const { columns: pColumns, rows: pRows } = projectsTableData();
 
@@ -206,30 +212,33 @@ fetch("http://localhost:8000/order/pincodes", requestOptions)
       <FormGroup>
       <FormControlLabel control={<Checkbox defaultChecked />} label="Status" />
       <FormGroup aria-label="position" row>
-      <FormControlLabel control={<Checkbox checked={sun}  />} label="Sunday" />
-      <FormControlLabel  control={<Checkbox checked={mon}  />} label="Monday" />
-      <FormControlLabel  control={<Checkbox checked={tue}/>} label="Tuesday" />
-      <FormControlLabel  control={<Checkbox checked={wed} />} label="WednesDay" />
-      <FormControlLabel  control={<Checkbox checked={thu} />} label="Thursday" />
-      <FormControlLabel  control={<Checkbox checked={fri} />} label="Friday" />
-      <FormControlLabel  control={<Checkbox checked={sat} />} label="Saturday" />
+      <FormControlLabel control={<Checkbox checked={sun} onChange={handleChangeSun} />} label="Sunday" />
+      <FormControlLabel  control={<Checkbox checked={mon}  onChange={handleChangeMon}/>} label="Monday" />
+      <FormControlLabel  control={<Checkbox checked={tue}  onChange={handleChangeTue}/>} label="Tuesday" />
+      <FormControlLabel  control={<Checkbox checked={wed} onChange={handleChangeWed} />} label="WednesDay" />
+      <FormControlLabel  control={<Checkbox checked={thu} onChange={handleChangeThu}/>} label="Thursday" />
+      <FormControlLabel  control={<Checkbox checked={fri} onChange={handleChangefri}/>} label="Friday" />
+      <FormControlLabel  control={<Checkbox checked={sat} onChange={handleChangeSat}/>} label="Saturday" />
       </FormGroup>
       </FormGroup>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} >Cancel</Button>
-          <Button onClick={handleSaveClose}>Save</Button>
+          <Button 
+          onClick={handleSaveClose} >Save</Button>
         </DialogActions>
                 </Dialog>
               </div>
               <MDBox pt={3}>
-                <DataTable
+              {flag==true ? <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box> :<DataTable
                   table={{ columns, rows }}
                   isSorted={false}
                   entriesPerPage={false}
                   showTotalEntries={false}
                   noEndBorder
-                />
+                />}
               </MDBox>
           
             </Card>
