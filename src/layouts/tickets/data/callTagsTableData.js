@@ -69,7 +69,7 @@ var requestOptions = {
 
 
 
-    fetch("http://localhost:8000/order/tickets")
+    fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/order/tickets")
       .then((response) => {
         return response.json();
       })
