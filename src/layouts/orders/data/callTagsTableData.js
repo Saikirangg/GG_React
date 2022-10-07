@@ -129,7 +129,8 @@ var requestOptions = {
                <>
                <MDBox>
                <MDBadge badgeContent={k.key} color="success" variant="gradient" size="sm" />
-               <MDBadge badgeContent={k.value} color="failure" variant="gradient" size="sm" />
+               <MDBadge badgeContent={JSON.stringify(k.value).replace(/:(\d+)([,\}])/g, ':"$1"$2')
+            .replace(/:(true|false|null)/g, ':"$1"')} color="failure" variant="gradient" size="sm" />
                </MDBox>
                </>
                )
