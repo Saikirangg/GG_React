@@ -337,7 +337,7 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptionsWalle
                     style={{ color : "white" }}
                     onClick={handleClickOpenBal}
                     >
-                      Increase Balance
+                      Update Balance
                     </Button>
 
                     
