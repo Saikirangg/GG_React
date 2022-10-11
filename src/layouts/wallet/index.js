@@ -56,7 +56,9 @@ function Wallet() {
   const placeholder= 'Enter your text...'
   const { columns, rows } = authorsTableData();
   const [open, setOpen] = useState(false);
+  const [openbal, setOpenbal] = useState(false);
   const [value, setValue] = useState(initialValue)
+  const [incbal, setIncbal] = useState(initialValue)
   const [userwallet, setUserwallet] = useState("");
   const [userid, setUserid] = useState("");
   const [useremail, setUseremail] = useState("");
@@ -67,8 +69,16 @@ function Wallet() {
     setOpen(true);
   };
 
+  const handleClickOpenBal = () => {
+    setOpenbal(true);
+  };
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleCloseBal = () => {
+    setOpenbal(false);
   };
 
   useEffect(() => {
@@ -103,7 +113,29 @@ function Wallet() {
   }, [userwallet]);
 
   
+  const handleSaveBalClose = () => {
+    setOpenbal(false);
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
+myHeaders.append("Content-Type", "application/json");
 
+var graphql = JSON.stringify({
+  query: "mutation UpdateWalletBalance($input: WalletInput!) {\n  walletBalanceUpdate(input: $input) {\n    wallet {\n      id\n      amount\n      __typename\n    }\n    __typename\n  }\n}\n",
+  variables: {"input":{"amount": incbal,"reason":"min_balance_needed","secret":"GOURMET","type":"ADD","userId": userid}}
+})
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: graphql,
+  redirect: 'follow'
+};
+
+fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  // window.location.reload();
+  };
 
   const handleSaveClose = () => {
     setOpen(false);
@@ -290,6 +322,77 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptionsWalle
                     Email  : {useremail}
 
                     </Typography>
+
+{/* Increase the balance */}
+                   {userid!="" && <Button variant="contained" 
+                    style={{ color : "white" }}
+                    onClick={handleClickOpenBal}
+                    >
+                      Increase Balance
+                    </Button>
+
+                    
+                }
+                {/* new check */}
+
+                
+                <Dialog open={openbal} PaperProps={{
+        sx: {
+          width: "50%",
+          maxHeight: 1000,
+          height : "45%"
+        }
+      }} onClose={handleClickOpenBal}>
+        {/* <DialogTitle>Call Tags</DialogTitle> */}
+        <MDBox
+                mx={2}
+                mt={2}
+                py={3}
+                px={2}
+                variant="gradient"
+                bgColor="info"
+                borderRadius="lg"
+                coloredShadow="info"
+              >
+                <MDTypography variant="h6" color="white">
+                Add Balance
+                </MDTypography>
+              </MDBox>
+        <DialogContent style={{ overflow: "hidden" }}>
+          <DialogContentText>
+            Add new balance
+          </DialogContentText>
+          <TextField
+            autoFocus
+            // value={this.state.value}
+            
+            margin="dense"
+            id="name"
+            label="Customer Name"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={incbal}
+            onChange={e => setIncbal(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseBal}>Cancel</Button>
+          <Button onClick={handleSaveBalClose}>Add</Button>
+        </DialogActions>
+      </Dialog>
+
+                {/* new check */}
+{/* Decrease the balance */}
+                {/* {userid!="" && <Button variant="contained" 
+                color="red"
+                          style={{ color : "white" }}
+                          // onClick={handleClickOpen}
+                          >
+                            Decrease Balance
+                          </Button>
+                      } */}
+
                     
                   </CardContent>
       <CardActions>
