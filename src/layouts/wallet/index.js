@@ -33,6 +33,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 import Box from '@mui/material/Box';
 import CardActions from '@mui/material/CardActions';
@@ -63,7 +68,11 @@ function Wallet() {
   const [userid, setUserid] = useState("");
   const [useremail, setUseremail] = useState("");
   const [userfirstname, setUserfirstname] = useState("");
-  
+  const [gender, setGender] = React.useState('ADD');
+
+  const handleChange = (event) => {
+    setGender(event.target.value)
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -121,7 +130,7 @@ myHeaders.append("Content-Type", "application/json");
 
 var graphql = JSON.stringify({
   query: "mutation UpdateWalletBalance($input: WalletInput!) {\n  walletBalanceUpdate(input: $input) {\n    wallet {\n      id\n      amount\n      __typename\n    }\n    __typename\n  }\n}\n",
-  variables: {"input":{"amount": incbal,"reason":"min_balance_needed","secret":"GOURMET","type":"ADD","userId": userid}}
+  variables: {"input":{"amount": incbal,"reason":"min_balance_needed","secret":"GOURMET","type": gender,"userId": userid}}
 })
 var requestOptions = {
   method: 'POST',
@@ -339,8 +348,8 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptionsWalle
                 <Dialog open={openbal} PaperProps={{
         sx: {
           width: "50%",
-          maxHeight: 1000,
-          height : "45%"
+          maxHeight: 2000,
+          height : "60%"
         }
       }} onClose={handleClickOpenBal}>
         {/* <DialogTitle>Call Tags</DialogTitle> */}
@@ -362,6 +371,7 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptionsWalle
           <DialogContentText>
             Add new balance
           </DialogContentText>
+          
           <TextField
             autoFocus
             // value={this.state.value}
@@ -375,6 +385,21 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptionsWalle
             value={incbal}
             onChange={e => setIncbal(e.target.value)}
           />
+          <FormControl>
+      {/* <FormLabel id="demo-radio-buttons-group-label">Money</FormLabel> */}
+      <RadioGroup
+        aria-labelledby="demo-radio-buttons-group-label"
+        defaultValue="female"
+        name="radio-buttons-group"
+      >
+        <FormControlLabel value = "ADD"
+          checked={gender === 'ADD'}
+          onChange={handleChange} control={<Radio />} label="Increase" />
+        <FormControlLabel value = "SUB"
+          checked={gender === 'SUB'}
+          onChange={handleChange} control={<Radio />} label="Decrease" />
+      </RadioGroup>
+    </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseBal}>Cancel</Button>
