@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
 /**
 =========================================================
 * Gourmet Garden CRM React - v2.1.0
@@ -54,14 +52,41 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/"+param, requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-    // setOpens(true);
-    // window.location.reload()
-    console.log(param+" id deleted");
+// fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/"+param, requestOptions)
+//   .then(response => response.text())
+//   .then(result => console.log(result))
+//   .catch(error => console.log('error', error));
+//     // setOpens(true);
+//     // window.location.reload()
+//     console.log(param+" id deleted");
     window.location.reload();
+  };
+
+  function walletBalance(param) {
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
+myHeaders.append("Content-Type", "application/json");
+
+var graphql = JSON.stringify({
+  query: "query Wallet($userId:ID!){\n  wallet(userId:$userId){\n    id\n    user{\n      id\n      email\n      firstName\n    }\n    amount\n    expiryDate\n  }\n}",
+  variables: {"userId":param}
+})
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: graphql,
+  redirect: 'follow'
+};
+
+fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log("balance is "+result.data.wallet.id))
+  .then((response) => {
+    // return response.data..json();
+  })
+  .catch(error => console.log('error', error));
+  // console.log()
+  // return response.json();
   };
 
   const handleCloses = () => {
@@ -69,6 +94,36 @@ fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call
   };
 
   useEffect(() => {
+//
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
+myHeaders.append("Content-Type", "application/json");
+
+var graphql = JSON.stringify({
+  query: "fragment CustomerFragment on User {\n  id\n  email\n  firstName\n  lastName\n  phone\n  metadata {\n    key\n    value\n    __typename\n  }\n  __typename\n}\n\nquery Customers($after: String, $before: String, $first: Int, $last: Int, $filter: CustomerFilterInput, $sort: UserSortingInput) {\n  customers(after: $after, before: $before, first: $first, last: $last, filter: $filter, sortBy: $sort) {\n    edges {\n      node {\n        ...CustomerFragment\n        orders(first: 1) {\n          totalCount\n          edges {\n            node {\n              id\n              created\n              shippingAddress {\n                id\n                city\n                postalCode\n                __typename\n              }\n              __typename\n            }\n            __typename\n          }\n          __typename\n        }\n        firstPlacedOrder: orders(last: 1) {\n          edges {\n            node {\n              id\n              created\n              __typename\n            }\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      __typename\n    }\n    __typename\n  }\n}\n",
+  variables: {"first":20,"filter":{"dateJoined":null,"moneySpent":null,"numberOfOrders":null},"sort":{"direction":"ASC","field":"LAST_NAME"}}
+})
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: graphql,
+  redirect: 'follow'
+};
+
+fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
+.then((response) => {
+  // console.log("this is customers"+response.json())
+  return response.json();
+})
+.then((datas) => {
+  console.log(datas);
+  setUsers(datas.data.customers.edges);
+})
+  // .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+    //
 
     var raw = "";
 
@@ -78,28 +133,19 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-// fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/", requestOptions)
-//   .then((response) => {
-//   // response => response.text();
-//   console.log(response)
-//   setUsers(response.data);
-//   return response.json();
-//   }
-//   )
-//   .then(result => console.log(result.data))
-//   .catch(error => console.log('error', error));
 
 
 
 
-    fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/")
-      .then((response) => {
-        return response.json();
-      })
-      .then((datas) => {
-        console.log(datas);
-        setUsers(datas.data);
-      })
+
+    // fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/")
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((datas) => {
+    //     console.log(datas);
+    //     setUsers(datas.data);
+    //   })
   }, [])
 
   useEffect(() => {
@@ -109,17 +155,17 @@ var requestOptions = {
       users.map((u)=>{
         usersListTemp.push({
           // (users.map(us => us.name))
-          calltag: <Author image={team2}
+          name_and_email: <Author image={team2}
             // {...users.map(user => ( 
             // {...console.log(userk.username)}
-            name={u.call_tag}
-            email={u.call_id}
+            name={u.node.firstName + u.node.firstName}
+            email={u.node.email}
           // ))}
           />,
-          function: <Job title="Manager" description="Organization" />,
+          mobile_number: <Job title="phone" description={u.node.phone!=null?u.node.phone:""} />,
           status: (
             <MDBox ml={-1}>
-              <MDBadge badgeContent={u.is_active.toString()} color="success" variant="gradient" size="sm" />
+              <MDBadge badgeContent={walletBalance(u.node.id)} color="success" variant="gradient" size="sm" />
             </MDBox>
           ),
           createdat: (
@@ -224,8 +270,8 @@ var requestOptions = {
     // ],
 
     columns: [
-      { Header: "calltag", accessor: "calltag", width: "45%", align: "left" },
-      { Header: "function", accessor: "function", align: "left" },
+      { Header: "name_and_email", accessor: "name_and_email", width: "45%", align: "left" },
+      { Header: "mobile_number", accessor: "mobile_number", align: "left" },
       { Header: "status", accessor: "status", align: "center" },
       { Header: "createdat", accessor: "createdat", align: "center" },
       { Header: "action", accessor: "action", align: "center" },

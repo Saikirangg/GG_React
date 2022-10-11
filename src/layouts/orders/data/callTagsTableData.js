@@ -46,7 +46,7 @@ myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
 myHeaders.append("Content-Type", "application/json");
 
 var graphql = JSON.stringify({
-  query: "query Order($first: Int){\n    orders(first: $first) {\n		edges {\n			node {\n				__typename\n				created\n				id\n				number\n				payments {\n					gateway\n					__typename\n				}\n				privateMetadata {\n					key\n					value\n					__typename\n				}\n				voucher {\n					code\n					__typename\n				}\n				metadata {\n					key\n					value\n					__typename\n				}\n				fulfillments {\n					trackingNumber\n					__typename\n				}\n				paymentStatus\n				status\n				total {\n					__typename\n					gross {\n						__typename\n						amount\n						currency\n					}\n				}\n				userEmail\n			}\n			__typename\n		}\n		pageInfo {\n			hasPreviousPage\n			hasNextPage\n			startCursor\n			endCursor\n			__typename\n		}\n		__typename\n	}\n}",
+  query: "query Order($first: Int){\n    orders(first: $first) {\n		edges {\n			node {\n				__typename\n				created\n				id\n                user{\n        email\n        phone\n        firstName\n        lastName\n      }\n      shippingAddress{\n        id\n        firstName\n        lastName\n        streetAddress1\n        streetAddress2\n        city\n        cityArea\n        postalCode\n        countryArea\n      }\n       billingAddress{\n        id\n        firstName\n        lastName\n        streetAddress1\n        streetAddress2\n        city\n        cityArea\n        postalCode\n        countryArea\n      }\n      lines{\n        variant{\n          sku\n        }\n      }\n				number\n				payments {\n					gateway\n					__typename\n				}\n				privateMetadata {\n					key\n					value\n					__typename\n				}\n				voucher {\n					code\n					__typename\n				}\n				metadata {\n					key\n					value\n					__typename\n				}\n				fulfillments {\n					trackingNumber\n					__typename\n				}\n				paymentStatus\n				status\n				total {\n					__typename\n					gross {\n						__typename\n						amount\n						currency\n					}\n				}\n				userEmail\n			}\n			__typename\n		}\n		pageInfo {\n			hasPreviousPage\n			hasNextPage\n			startCursor\n			endCursor\n			__typename\n		}\n		__typename\n	}\n}",
   variables: {"first":20}
 })
 var requestOptions = {
@@ -92,28 +92,85 @@ var requestOptions = {
       users.map((u)=>{
         usersListTemp.push({
           // (users.map(us => us.name))
-          id_and_email: <Author image={team2}
-            // {...users.map(user => ( 
-            // {...console.log(userk.username)}
-            name={u.node.id}
-            email={u.node.userEmail}
-          // ))}
-          />,
-          number_and_status: <Job title={u.node.number} description={u.node.status} />,
+          id_and_email: (
+          // <>
+          // {/* <Author 
+          //   // image={team2}
+          //   name={u.node.id}
+          //   email={u.node.userEmail} /> */}
+          //   <MDBox>
+          //     <MDBadge badgeContent={u.node.user.email} color="success" variant="gradient" size="sm" />
+          //     <MDBadge badgeContent={"k.value"} color="failure" variant="gradient" size="sm" />
+          //   </MDBox></>
+          <MDBox ml={-1}>
+               <MDBox>
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+             {u.node.user!=null ? u.node.user.firstName+" "+u.node.user.lastName : ""}
+            </MDTypography>
+            </MDBox>
+            <MDBox>
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+             {u.node.user!=null ? u.node.user.phone : ""}
+            </MDTypography>
+            </MDBox>
+            <MDBox>
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+             {u.node.user!=null ? u.node.user.email : ""}
+            </MDTypography>
+            </MDBox>
+            </MDBox>
+          ),
+          number_and_status: <Job title={"Number : "+u.node.number} description={"Status : "+u.node.status} />,
           paymentStatus: (
             <MDBox ml={-1}>
-              <MDBadge badgeContent={u.node.paymentStatus} color="success" variant="gradient" size="sm" />
+              {/* <MDBadge badgeContent={u.node.paymentStatus} color="success" variant="gradient" size="sm" /> */}
+              {
+               u.node.metadata.length>0 && u.node.metadata.map((k)=> 
+               <>
+               <MDBox>
+               <MDBadge badgeContent={k.key} color="success" variant="gradient" size="sm" />
+               <MDBadge badgeContent={JSON.stringify(k.value)} color="failure" variant="gradient" size="sm" />
+               </MDBox>
+               </>
+               )
+                }
+
             </MDBox>
           ),
           createdat: (
+            <MDBox ml={-1}>
+              {
+               u.node.payments.length>0 && u.node.payments.map((k)=> 
+               <MDBox>
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              "{u.node.created}"
+             {k.gateway}
             </MDTypography>
+            </MDBox>
+            )
+          }
+            </MDBox>
           ),
-          action: (
+          shipping_address: (
+            // <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            //   Edit
+            // </MDTypography>
+            <MDBox ml={-1}>
+               <MDBox>
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              Edit
+             {u.node.shippingAddress!=null ? u.node.shippingAddress.firstName+" "+u.node.shippingAddress.lastName : ""}
             </MDTypography>
+            </MDBox>
+            <MDBox>
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+             {u.node.shippingAddress!=null ? u.node.shippingAddress.city : ""}
+            </MDTypography>
+            </MDBox>
+            <MDBox>
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+             {u.node.shippingAddress!=null ? u.node.shippingAddress.streetAddress1+" , "+u.node.shippingAddress.streetAddress2+" , "+u.node.shippingAddress.postalCode : ""}
+            </MDTypography>
+            </MDBox>
+            </MDBox>
           ),
         })
       })
@@ -123,7 +180,7 @@ var requestOptions = {
     }
   }, [users]);
 
-  const Author = ({ image, name, email }) => (
+  const Author = ({ image, name, email,number_val, number, payments, gross_value }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />
       <MDBox ml={2} lineHeight={1}>
@@ -131,6 +188,10 @@ var requestOptions = {
           {name}
         </MDTypography>
         <MDTypography variant="caption">{email}</MDTypography>
+        {/* <MDTypography variant="caption">{number_val}</MDTypography> */}
+        
+        {/* <MDTypography variant="caption">{payments}</MDTypography>
+        <MDTypography variant="caption">{gross_value}</MDTypography> */}
       </MDBox>
     </MDBox>
   );
@@ -160,7 +221,7 @@ var requestOptions = {
       { Header: "number_and_status", accessor: "number_and_status", align: "left" },
       { Header: "paymentStatus", accessor: "paymentStatus", align: "center" },
       { Header: "createdat", accessor: "createdat", align: "center" },
-      { Header: "action", accessor: "action", align: "center" },
+      { Header: "shipping_address", accessor: "shipping_address", align: "center" },
     ],
 
     // {users.length>0 ? (rows:[]) : (rows:[])}
