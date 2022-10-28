@@ -37,7 +37,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { WindowSharp } from "@mui/icons-material";
 
 
-export default function data(setHh,setTagedit) {
+export default function data(setHh,setTagedit,setTageditid) {
   const [users, setUsers] = useState([]);
   const [usersList, setUsersList] = useState([]);
 
@@ -151,7 +151,8 @@ export default function data(setHh,setTagedit) {
               onClick={() => {
                 handleClickOpenDiaologue();
                 setTagedit(u.call_tag);
-                console.log(u.call_tag);
+                setTageditid(u.call_id);
+                console.log(u.call_id);
               }}>
                {/* onClick={handleClickOpenDiaologue}> */}
                 Edit

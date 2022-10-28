@@ -49,7 +49,8 @@ function CallTags() {
   const [value, setValue] = React.useState(initialValue)
   const [hh, setHh] = React.useState(false);
   const [tagedit, setTagedit] = React.useState("");
-  const { columns, rows } = authorsTableData(setHh,setTagedit);
+  const [tageditid, setTageditid] = React.useState("");
+  const { columns, rows } = authorsTableData(setHh,setTagedit,setTageditid);
 
 
 
@@ -110,7 +111,7 @@ fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call
       redirect: 'follow'
     };
     
-    fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/31", requestOptions)
+    fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/"+tageditid.toString(), requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
