@@ -37,30 +37,31 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { WindowSharp } from "@mui/icons-material";
 
 
-export default function data() {
+export default function data(setHh,setTagedit) {
   const [users, setUsers] = useState([]);
   const [usersList, setUsersList] = useState([]);
 
   const [opens, setOpens] = React.useState(false);
-  
+  const [abc, setAbc] = React.useState(false);
+
 
   const handleClick = (event, param) => {
     console.log(param);
     var raw = "";
 
-var requestOptions = {
-  method: 'DELETE',
-  body: raw,
-  redirect: 'follow'
-};
+    var requestOptions = {
+      method: 'DELETE',
+      body: raw,
+      redirect: 'follow'
+    };
 
-fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/"+param, requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
+    fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/" + param, requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
     // setOpens(true);
     // window.location.reload()
-    console.log(param+" id deleted");
+    console.log(param + " id deleted");
     window.location.reload();
   };
 
@@ -68,26 +69,36 @@ fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call
     setOpens(false);
   };
 
+  const handleClickOpenDiaologue = () => {
+    console.log("nani is bujji");
+
+    setHh(true);
+  };
+
+  const handleCloseDiaologue = () => {
+    setHh(false);
+  };
+
   useEffect(() => {
 
     var raw = "";
 
-var requestOptions = {
-  method: 'GET',
-  body: raw,
-  redirect: 'follow'
-};
+    var requestOptions = {
+      method: 'GET',
+      body: raw,
+      redirect: 'follow'
+    };
 
-// fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/", requestOptions)
-//   .then((response) => {
-//   // response => response.text();
-//   console.log(response)
-//   setUsers(response.data);
-//   return response.json();
-//   }
-//   )
-//   .then(result => console.log(result.data))
-//   .catch(error => console.log('error', error));
+    // fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/", requestOptions)
+    //   .then((response) => {
+    //   // response => response.text();
+    //   console.log(response)
+    //   setUsers(response.data);
+    //   return response.json();
+    //   }
+    //   )
+    //   .then(result => console.log(result.data))
+    //   .catch(error => console.log('error', error));
 
 
 
@@ -106,7 +117,7 @@ var requestOptions = {
     console.log(users);
     if (users.length > 0) {
       var usersListTemp = [];
-      users.map((u)=>{
+      users.map((u) => {
         usersListTemp.push({
           // (users.map(us => us.name))
           calltag: <Author image={team2}
@@ -129,37 +140,37 @@ var requestOptions = {
           ),
           action: (
             <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              <Button variant="contained"  style={{
-        borderRadius: 24,
-        backgroundColor: "#21b6ae",
-        padding: "2px 39px",
-        fontSize: "13px",
-        color : "white",
-        
-    }}>
-                  Edit
-              </Button>
-              {/* <Button 
-              style={{
+              <Button variant="contained" style={{
                 borderRadius: 24,
-                backgroundColor: "#ed3326",
+                backgroundColor: "#21b6ae",
                 padding: "2px 39px",
                 fontSize: "13px",
-                color : "white"
-            }}
-              variant="contained" >
-                  Delete
-              </Button> */}
-              <Button variant="contained"  style={{
-        borderRadius: 24,
-        backgroundColor: "#21b6ae",
-        padding: "2px 39px",
-        fontSize: "13px",
-        color : "white"
-    }} onClick={event => handleClick(event, u.call_id)}>
-        Delete
-      </Button>
-      <Dialog open={opens} onClose={handleCloses}>
+                color: "white",
+
+              }} 
+              onClick={() => {
+                handleClickOpenDiaologue();
+                setTagedit(u.call_tag);
+                console.log(u.call_tag);
+              }}>
+               {/* onClick={handleClickOpenDiaologue}> */}
+                Edit
+              </Button>
+              <Button variant="contained" style={{
+                borderRadius: 24,
+                backgroundColor: "#21b6ae",
+                padding: "2px 39px",
+                fontSize: "13px",
+                color: "white"
+              }}
+                onClick={event => handleClick(event, u.call_id)}>
+                Delete
+              </Button>
+
+              {/* dialogue for edit module */}
+              
+              {/* dialgue for edit module */}
+              {/* <Dialog open={opens} onClose={handleCloses}>
         <DialogTitle>Subscribe</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -180,7 +191,7 @@ var requestOptions = {
           <Button onClick={handleCloses}>Cancel</Button>
           <Button onClick={handleCloses}>Subscribe</Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
             </MDTypography>
           ),
         })

@@ -45,9 +45,18 @@ import { Button } from "@mui/material";
 function CallTags() {
   const initialValue= ''
   const placeholder= 'Enter your text...'
-  const { columns, rows } = authorsTableData();
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState(initialValue)
+  const [hh, setHh] = React.useState(false);
+  const [tagedit, setTagedit] = React.useState("");
+  const { columns, rows } = authorsTableData(setHh,setTagedit);
+
+
+
+  const handleCloseDiaologue = () => {
+    console.log('manatho mamulga vundadhu');
+    setHh(false)
+  }
 
   
 
@@ -83,6 +92,31 @@ fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call
     window.location.reload()
   };
 
+  // function to edit
+
+  const handleEditSave = () => {
+    setHh(false);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    var raw = JSON.stringify({
+      "call_tag": tagedit
+    });
+    
+    var requestOptions = {
+      method: 'PUT',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    
+    fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/31", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+    window.location.reload()
+  };
+
 
   // const { columns: pColumns, rows: pRows } = projectsTableData();
 
@@ -115,6 +149,55 @@ fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call
       onClick={handleClickOpen}>
         Add New
       </Button>
+
+
+      <Dialog open={hh} PaperProps={{
+                sx: {
+                  width: "50%",
+                  maxHeight: 1000,
+                  height: "45%"
+                }
+              }} onClose={handleCloseDiaologue}>
+                {/* <DialogTitle>Call Tags</DialogTitle> */}
+                <MDBox
+                  mx={2}
+                  mt={2}
+                  py={3}
+                  px={2}
+                  variant="gradient"
+                  bgColor="info"
+                  borderRadius="lg"
+                  coloredShadow="info"
+                >
+                  <MDTypography variant="h6" color="white">
+                    Call Tags
+                  </MDTypography>
+                </MDBox>
+                <DialogContent style={{ overflow: "hidden" }}>
+                  <DialogContentText>
+                    Edit Call Tags
+                  </DialogContentText>
+                  <TextField
+                    autoFocus
+                    // value={this.state.value}
+
+                    margin="dense"
+                    id="name"
+                    label="Call Tag Name"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                  value={tagedit}
+                  onChange={e => setTagedit(e.target.value)}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseDiaologue}>Cancel</Button>
+                  <Button onClick={handleEditSave}>Save</Button>
+                </DialogActions>
+              </Dialog>
+
+
       <Dialog open={open} PaperProps={{
         sx: {
           width: "50%",
