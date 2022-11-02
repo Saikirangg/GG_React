@@ -53,7 +53,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/"+param, requestOptions)
+fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/"+param, requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -146,7 +146,7 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
 
 
 
-    // fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/")
+    // fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/")
     //   .then((response) => {
     //     return response.json();
     //   })

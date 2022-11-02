@@ -45,7 +45,7 @@ export default function data() {
     redirect: 'follow'
   };
   
-  fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/order/pincodes/"+id, requestOptions)
+  fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/order/pincodes/"+id, requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -71,7 +71,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/order/pincodes")
+fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/order/pincodes")
       .then((response) => {
         return response.json();
       })

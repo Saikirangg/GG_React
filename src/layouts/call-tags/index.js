@@ -85,7 +85,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/", requestOptions)
+fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -111,7 +111,7 @@ fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call
       redirect: 'follow'
     };
     
-    fetch("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/calls/call_tags/"+tageditid.toString(), requestOptions)
+    fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/"+tageditid.toString(), requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
