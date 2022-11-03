@@ -94,67 +94,6 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
     setOpens(false);
   };
 
-  useEffect(() => {
-    //new
-
-
-  // .then(response => response.text())
-  // .then(result => console.log(result))
-  // .catch(error => console.log('error', error));
-//
-// old
-// var myHeaders = new Headers();
-// myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
-// myHeaders.append("Content-Type", "application/json");
-
-// var graphql = JSON.stringify({
-//   query: "fragment CustomerFragment on User {\n  id\n  email\n  firstName\n  lastName\n  phone\n  metadata {\n    key\n    value\n    __typename\n  }\n  __typename\n}\n\nquery Customers($after: String, $before: String, $first: Int, $last: Int, $filter: CustomerFilterInput, $sort: UserSortingInput) {\n  customers(after: $after, before: $before, first: $first, last: $last, filter: $filter, sortBy: $sort) {\n    edges {\n      node {\n        ...CustomerFragment\n        orders(first: 1) {\n          totalCount\n          edges {\n            node {\n              id\n              created\n              shippingAddress {\n                id\n                city\n                postalCode\n                __typename\n              }\n              __typename\n            }\n            __typename\n          }\n          __typename\n        }\n        firstPlacedOrder: orders(last: 1) {\n          edges {\n            node {\n              id\n              created\n              __typename\n            }\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      __typename\n    }\n    __typename\n  }\n}\n",
-//   variables: {"first":20,"filter":{"dateJoined":null,"moneySpent":null,"numberOfOrders":null},"sort":{"direction":"ASC","field":"LAST_NAME"}}
-// })
-// var requestOptions = {
-//   method: 'POST',
-//   headers: myHeaders,
-//   body: graphql,
-//   redirect: 'follow'
-// };
-
-// fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
-// .then((response) => {
-//   // console.log("this is customers"+response.json())
-//   return response.json();
-// })
-// .then((datas) => {
-//   console.log(datas);
-//   setUsers(datas.data.customers.edges);
-// })
-//   // .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
-
-//     //
-
-//     var raw = "";
-
-// var requestOptions = {
-//   method: 'GET',
-//   body: raw,
-//   redirect: 'follow'
-// };
-
-
-
-
-
-
-    // fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/")
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((datas) => {
-    //     console.log(datas);
-    //     setUsers(datas.data);
-    //   })
-  }, [])
 
   useEffect(() => {
     console.log(users);

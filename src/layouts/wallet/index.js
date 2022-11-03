@@ -62,8 +62,8 @@ function Wallet() {
   const { columns, rows } = authorsTableData();
   const [open, setOpen] = useState(false);
   const [openbal, setOpenbal] = useState(false);
-  const [value, setValue] = useState(initialValue)
-  const [incbal, setIncbal] = useState(initialValue)
+  const [value, setValue] = useState("")
+  const [incbal, setIncbal] = useState("")
   const [userwallet, setUserwallet] = useState("");
   const [userid, setUserid] = useState("");
   const [useremail, setUseremail] = useState("");
@@ -95,29 +95,6 @@ function Wallet() {
     //new
     console.log("this is using useeffect")
 
-    // var myHeaders = new Headers();
-    // myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
-    // myHeaders.append("Content-Type", "application/json");
-    
-    // var graphql = JSON.stringify({
-    //   query: "query{\n  users(phone:\"\",email:\""+value+"\"){\n    id\n    lastLogin\n  }\n}",
-    //   variables: {}
-    // })
-    // var requestOptions = {
-    //   method: 'POST',
-    //   headers: myHeaders,
-    //   body: graphql,
-    //   redirect: 'follow'
-    // };
-    
-    // fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
-    //   .then(response => response.text()
-    //   )
-    //   .then(result =>
-    //     setUserwallet(result)
-    //   )
-    //   .catch(error => console.log('error', error));
-    // console.log(results);
     
   }, [userwallet]);
 
@@ -155,7 +132,7 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
     myHeaders.append("Content-Type", "application/json");
     
     var graphql = JSON.stringify({
-      query: "query{\n  users(phone:\"\",email:\""+value+"\"){\n    id\n    lastLogin\n  }\n}",
+      query: "query{\n  users(email:\""+value+"\"){\n    id\n    lastLogin\n  }\n}",
       variables: {}
     })
     var requestOptions = {
@@ -174,38 +151,7 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptions)
         // setUserwallet(result)
       )
       .catch(error => console.log('error', error));
-      // window.location.reload()
-      // console.log(userwallet);
-    // sessionStorage.setItem("SURNAME", surname);
-    // sessionStorage.setItem("SURNAME", surname);
-    
-    //old
-//     var myHeaders = new Headers();
-// myHeaders.append("Content-Type", "application/json");
-
-// var raw = JSON.stringify({
-//   "call_tag": value
-// });
-
-// var requestOptions = {
-//   method: 'POST',
-//   headers: myHeaders,
-//   body: raw,
-//   redirect: 'follow'
-// };
-
-// fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/", requestOptions)
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
-//     console.log("value is "+value);
-    // window.location.reload()
     console.log("finallay here is "+userid)
-
-    //new one
-//     var myHeaders = new Headers();
-// myHeaders.append("Authorization", "Bearer BX7iC0evrcwbp1RaFSLn5lnNTYWmSS");
-// myHeaders.append("Content-Type", "application/json");
 
 var graphqlWallet = JSON.stringify({
   query: "query Wallet($userId:ID!){\n  wallet(userId:$userId){\n    id\n    user{\n      id\n      email\n      firstName\n    }\n    amount\n    expiryDate\n  }\n}",
@@ -231,8 +177,6 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptionsWalle
   .catch(error => console.log('error', error));
   };
 
-
-  // const { columns: pColumns, rows: pRows } = projectsTableData();
 
   return (
     <DashboardLayout>
@@ -406,17 +350,6 @@ fetch("https://gourmetgardenhapi.farziengineer.co/graphql/", requestOptionsWalle
           <Button onClick={handleSaveBalClose}>Add</Button>
         </DialogActions>
       </Dialog>
-
-                {/* new check */}
-{/* Decrease the balance */}
-                {/* {userid!="" && <Button variant="contained" 
-                color="red"
-                          style={{ color : "white" }}
-                          // onClick={handleClickOpen}
-                          >
-                            Decrease Balance
-                          </Button>
-                      } */}
 
                     
                   </CardContent>
