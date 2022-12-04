@@ -40,6 +40,7 @@ import Customers from "layouts/customers";
 import Wallet from "layouts/wallet";
 // @mui icons
 import Icon from "@mui/material/Icon";
+import Locus from "layouts/locus";
 
 const routes = [
   {
@@ -73,6 +74,14 @@ const routes = [
     icon: <Icon fontSize="small">discount</Icon>,
     route: "/orders",
     component: <Orders />,
+  },
+  {
+    type: "collapse",
+    name: "Locus",
+    key: "locus",
+    icon: <Icon fontSize="small">discount</Icon>,
+    route: "/locus",
+    component: <Locus />,
   },
   {
     type: "collapse",
