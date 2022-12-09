@@ -130,7 +130,7 @@ const Locus=()=>{
                 }
 
                   {success.length!=0 && 
-                <p>Failed: 
+                <p>Success: 
                   
                   {success.map((item, index) => (
                     <li key={index}>{item}</li>
