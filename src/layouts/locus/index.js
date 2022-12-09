@@ -52,7 +52,7 @@ const Locus=()=>{
       formData.append("file", selectedFile);
       console.log(selectedFile);
       axios
-      .post("http://localhost:8000/api/locus/file_upload/", formData, {
+      .post("http://ec2-15-206-79-135.ap-south-1.compute.amazonaws.com:8000/api/locus/file_upload/", formData, {
           headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": "Basic c2Fpa2lyYW5AZ21haWwuY29tOnNhaWtpcmFu",
