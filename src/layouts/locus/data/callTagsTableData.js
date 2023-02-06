@@ -53,7 +53,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/"+param, requestOptions)
+fetch("https://ggbeta-gcp-h6c2-main-i2mxwms2pq-el.a.run.app/calls/call_tags/"+param, requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));

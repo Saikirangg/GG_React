@@ -45,7 +45,7 @@ export default function data() {
     redirect: 'follow'
   };
   
-  fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/order/pincodes/"+id, requestOptions)
+  fetch("https://ggbeta-gcp-h6c2-main-i2mxwms2pq-el.a.run.app/order/pincodes/"+id, requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -71,7 +71,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/order/pincodes")
+fetch("https://ggbeta-gcp-h6c2-main-i2mxwms2pq-el.a.run.app/order/pincodes")
       .then((response) => {
         return response.json();
       })

@@ -55,7 +55,7 @@ export default function data(setHh,setTagedit,setTageditid) {
       redirect: 'follow'
     };
 
-    fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/" + param, requestOptions)
+    fetch("https://ggbeta-gcp-h6c2-main-i2mxwms2pq-el.a.run.app/calls/call_tags/" + param, requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
@@ -89,7 +89,7 @@ export default function data(setHh,setTagedit,setTageditid) {
       redirect: 'follow'
     };
 
-    // fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/", requestOptions)
+    // fetch("https://ggbeta-gcp-h6c2-main-i2mxwms2pq-el.a.run.app/calls/call_tags/", requestOptions)
     //   .then((response) => {
     //   // response => response.text();
     //   console.log(response)
@@ -103,7 +103,7 @@ export default function data(setHh,setTagedit,setTageditid) {
 
 
 
-    fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/")
+    fetch("https://ggbeta-gcp-h6c2-main-i2mxwms2pq-el.a.run.app/calls/call_tags/")
       .then((response) => {
         return response.json();
       })

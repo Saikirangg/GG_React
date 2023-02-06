@@ -61,7 +61,7 @@ var requestOptions = {
 //   .then(result => console.log(result))
 //   .catch(error => console.log('error', error));
 
-// fetch("https://bsjgoxudjb.execute-api.us-east-2.amazonaws.com/calls/call_tags/", requestOptions)
+// fetch("https://ggbeta-gcp-h6c2-main-i2mxwms2pq-el.a.run.app/calls/call_tags/", requestOptions)
 //   .then((response) => {
 //   // response => response.text();
 //   console.log(response)
